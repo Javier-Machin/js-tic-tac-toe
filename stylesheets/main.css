@@ -2,13 +2,33 @@ html, body {
   width: 100%;
   height: 100%;
   margin: 0;
+  font-family: sans-serif;
 }
 
-.navbar {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  min-width: 250px;
-  z-index: 2;
-  background: rgb(250,250,250);
+.game-board {
+  display: grid;
+  width: 45%;
+  margin: 70px auto;
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px 10px;
+  padding: 12px;
+  background-color: rgb(235,235,235);
+}
+
+.grid-element {
+  margin: 0;
+  background: white;
+  font-size: 10vw;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+  -webkit-user-select: none; /* Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
+
+.visible-text {
+  color: black;
 }
