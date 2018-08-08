@@ -13,6 +13,7 @@ html, body {
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 10px 10px;
   padding: 12px;
+  border-radius: 5px;
   background-color: rgb(235,235,235);
 }
 
@@ -27,6 +28,11 @@ html, body {
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+/Edge */
   user-select: none; /* Standard */
+}
+
+.score {
+  text-align: center;
+  font-weight: bold;
 }
 
 .visible-text {
