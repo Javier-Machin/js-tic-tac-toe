@@ -105,7 +105,7 @@ const game = (() => {
 
   // Player factory
   function newPlayer() {
-    const name = prompt("Please, enter your name");
+    const name = prompt("Please, enter your name", "Player");
     let score = 0;
     const getName = () => name;
     const getScore = () => score;
