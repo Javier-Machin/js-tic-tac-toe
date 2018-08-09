@@ -33,6 +33,7 @@ html, body {
 .score {
   text-align: center;
   font-weight: bold;
+  font-size: 30px;
 }
 
 .visible-text {

@@ -1,5 +1,4 @@
 const game = (() => {
-  const winningLines = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
   const gameBoard = createBoard();
   const player = newPlayer();
   const computer = newComputerPlayer();
@@ -7,7 +6,7 @@ const game = (() => {
   const scoreContainer = document.querySelector(".score"); 
   let lastPlayer = "";
 
-  drawGame(gameBoard, player, winningLines);
+  drawGame(gameBoard, player);
 
   //Create the HTML elements to display board and score 
   function drawGame(gameBoard, player,winningLines) {
@@ -34,14 +33,16 @@ const game = (() => {
     //Add score to its container
     const node = document.createElement("p");
     node.classList = "scoreText";
-    node.innerHTML = `${player.getName()} score: 
-                      ${player.getScore()} Computer score: 0`;
-    
+    node.innerHTML = `${player.getName()} score: ${player.getScore()} 
+                      ${computer.getName()} score: ${computer.getScore()}`;
+
     scoreContainer.appendChild(node);
   }
 
   //Implement check if winner with some / every
-  function lookForWinner(gameBoard, winningLines) {
+  function lookForWinner(gameBoard) {
+    const winningLines = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],
+                          [1,4,7],[2,5,8],[0,4,8],[2,4,6]];
     const winner = winningLines.some(function(line) {
       return (line.every(function(slot) { 
         return (gameBoard[slot] === lastPlayer)
@@ -51,9 +52,8 @@ const game = (() => {
     return winner;
   }
 
-  function displayWinner(lastPlayer) { 
-    const playerScore = player.getScore();
-    const computerScore = computer.getScore();
+  function displayWinner() { 
+    const scoreText = document.querySelector(".scoreText");
     
     if (lastPlayer === "X") { 
       player.addPoint();
@@ -62,22 +62,19 @@ const game = (() => {
       computer.addPoint();
       lastPlayer = computer.getName();
     }
-       
-    const scoreText = document.querySelector(".scoreText");
+
     scoreText.innerHTML = `${player.getName()} score: ${player.getScore()} 
                            ${computer.getName()} score: ${computer.getScore()}`;
-    alert(`${lastPlayer} won!`);
   }
 
+
   function checkState(gameBoard) {
-    if (lookForWinner(gameBoard, winningLines)) { 
-      displayWinner(lastPlayer);
-      resetBoard(); 
-    }
-    
-    if (isBoardFull(gameBoard)) { 
-      resetBoard(); 
-    }
+    if (lookForWinner(gameBoard)) { 
+      displayWinner();
+      resetBoard();    
+    } else if (isBoardFull(gameBoard)) {
+      resetBoard();   
+    } 
   }
 
   //Checks if the board is full
@@ -95,6 +92,9 @@ const game = (() => {
   }
 
   function resetBoard() {
+    const matchResult = document.querySelector(".match-result");
+    matchResult.classList.remove("visible-text");
+    lastPlayer = "";
     for (let i = 0; i < 9; i++) {
       const gridElement = document.getElementById(`element${i}`);
       gridElement.classList.remove("visible-text");
@@ -103,8 +103,9 @@ const game = (() => {
     }
   }
 
+  // Player factory
   function newPlayer() {
-    const name = prompt("Enter your name, please");
+    const name = prompt("Please, enter your name");
     let score = 0;
     const getName = () => name;
     const getScore = () => score;
@@ -118,7 +119,8 @@ const game = (() => {
   
     return {getName, getScore, addPoint, play}
   }
-  
+
+  // ComputerPLayer factory
   function newComputerPlayer() {
     const name = "Computer";
     let score = 0;
