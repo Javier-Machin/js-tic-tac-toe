@@ -23,8 +23,10 @@ const game = (() => {
           player.play(this, i);
           checkState(gameBoard);
           // Computer turn
-          computer.play();
-          checkState(gameBoard);
+          if (!isBoardFull(gameBoard)) { 
+            computer.play(); 
+            checkState(gameBoard);
+          }
         }
       })
 
@@ -92,15 +94,17 @@ const game = (() => {
   }
 
   function resetBoard() {
-    const matchResult = document.querySelector(".match-result");
-    matchResult.classList.remove("visible-text");
-    lastPlayer = "";
-    for (let i = 0; i < 9; i++) {
-      const gridElement = document.getElementById(`element${i}`);
-      gridElement.classList.remove("visible-text");
-      gridElement.innerHTML = "E";
-      gameBoard[i] = "E";
-    }
+    setTimeout(() => {
+      const matchResult = document.querySelector(".match-result");
+      matchResult.classList.remove("visible-text");
+      lastPlayer = "";
+      for (let i = 0; i < 9; i++) {
+        const gridElement = document.getElementById(`element${i}`);
+        gridElement.classList.remove("visible-text");
+        gridElement.innerHTML = "E";
+        gameBoard[i] = "E";
+      }
+    }, 1000)
   }
 
   // Player factory
